@@ -14,16 +14,24 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
 
 exports.add3d = functions.region('asia-east2').https.onRequest(async (req, res) => {
     const digit = req.query.digit;
+    const dayago = req.query.dayago;
+    if(!digit || isNaN(digit.trim())){
+        return res.status(400).json({error: "digit must be number."});
+    }
 
     let ts = Date.now();
     const date = new Date(ts);
 
-    if(req.query.dayago) {
-        date.setDate(date.getDate() - req.query.dayago)
+    if(dayago && isNaN(dayago.trim())){
+        return res.status(400).json({error: "dayago must be number."});
+    }
+
+    if(dayago){
+        date.setDate(date.getDate() - req.query.dayago);
     }
 
     const snapshot = await admin.database().ref('/3ds').push({digit, date: date.toString()});
-    res.status(200).json({ message: 'Successfully added.', key: snapshot.key, value: snapshot.val() });
+    res.status(200).json({ message: 'Successfully added.', key: snapshot.key });
 })
 
 exports.get3ds = functions.region('asia-east2').https.onRequest(async (req, res) => {
