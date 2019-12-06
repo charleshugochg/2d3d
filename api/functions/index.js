@@ -3,11 +3,11 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-const cors = require('cors')({origin: true});
+const cors = require('cors');
 const express = require('express')
 
 const app = express();
-app.use(cors);
+app.use(cors());
 
 exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
     .onCreate((snapshot, context) => {
@@ -43,7 +43,7 @@ app.get('/add3d', async (req, res) => {
 app.get('/get3ds', async (req, res) => {
     // Get a database reference to our posts
     var db = admin.database();
-    var ref = db.ref("3ds");
+    var ref = db.ref("3ds").orderByChild("date").limitToLast(10);
 
     // Attach an asynchronous callback to read the data at our posts reference
     ref.on("value", function(snapshot) {
@@ -55,7 +55,7 @@ app.get('/get3ds', async (req, res) => {
                 ...value
             })
         }
-        res.status(200).json(ret_val)
+        res.status(200).json(ret_val.reverse())
     }, function (errorObject) {
         res.status(500).json({error: errorObject.code});
     });
