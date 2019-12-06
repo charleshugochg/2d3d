@@ -3,6 +3,12 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
+const cors = require('cors')({origin: true});
+const express = require('express')
+
+const app = express();
+app.use(cors);
+
 exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
     .onCreate((snapshot, context) => {
         const original = snapshot.val();
@@ -12,7 +18,7 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
         return snapshot.ref.parent.child('uppercase').set(uppercase);
     })
 
-exports.add3d = functions.region('asia-east2').https.onRequest(async (req, res) => {
+app.get('/add3d', async (req, res) => {
     const digit = req.query.digit;
     const dayago = req.query.dayago;
     if(!digit || isNaN(digit.trim())){
@@ -27,14 +33,14 @@ exports.add3d = functions.region('asia-east2').https.onRequest(async (req, res) 
     }
 
     if(dayago){
-        date.setDate(date.getDate() - req.query.dayago);
+        date.setDate(date.getDate() - dayago);
     }
 
     const snapshot = await admin.database().ref('/3ds').push({digit, date: date.toString()});
     res.status(200).json({ message: 'Successfully added.', key: snapshot.key });
 })
 
-exports.get3ds = functions.region('asia-east2').https.onRequest(async (req, res) => {
+app.get('/get3ds', async (req, res) => {
     // Get a database reference to our posts
     var db = admin.database();
     var ref = db.ref("3ds");
@@ -54,3 +60,5 @@ exports.get3ds = functions.region('asia-east2').https.onRequest(async (req, res)
         res.status(500).json({error: errorObject.code});
     });
 })
+
+exports.api = functions.region('asia-east2').https.onRequest(app);
