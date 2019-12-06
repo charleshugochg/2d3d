@@ -41,7 +41,15 @@ exports.get3ds = functions.region('asia-east2').https.onRequest(async (req, res)
 
     // Attach an asynchronous callback to read the data at our posts reference
     ref.on("value", function(snapshot) {
-        res.status(200).json(Object.values(snapshot.val()))
+        const ret_val = []
+        const values = snapshot.val()
+        for (let [key, value] of Object.entries(values)){
+            ret_val.push({
+                key,
+                ...value
+            })
+        }
+        res.status(200).json(ret_val)
     }, function (errorObject) {
         res.status(500).json({error: errorObject.code});
     });
