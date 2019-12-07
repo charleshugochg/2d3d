@@ -37,7 +37,7 @@ app.get('/add3d', async (req, res) => {
     }
 
     const snapshot = await admin.database().ref('/3ds').push({digit, date: date.toString()});
-    res.status(200).json({ message: 'Successfully added.', key: snapshot.key });
+    res.json({ message: 'Successfully added.', key: snapshot.key });
 })
 
 app.get('/get3ds', async (req, res) => {
@@ -55,7 +55,7 @@ app.get('/get3ds', async (req, res) => {
                 ...value
             })
         }
-        res.status(200).json(ret_val.reverse())
+        res.json(ret_val.reverse())
     }, function (errorObject) {
         res.status(500).json({error: errorObject.code});
     });
