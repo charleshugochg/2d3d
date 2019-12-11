@@ -3,24 +3,14 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-const cors = require('cors');
 const express = require('express')
+const cors = require('cors');
 
 const app = express();
 app.use(cors());
 
-exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
-    .onCreate((snapshot, context) => {
-        const original = snapshot.val();
-        console.log('Uppercasing', context.params.pushId, original);
-        const uppercase = original.toUpperCase();
-
-        return snapshot.ref.parent.child('uppercase').set(uppercase);
-    })
-
-app.get('/add3d', async (req, res) => {
-    const digit = req.query.digit;
-    const dayago = req.query.dayago;
+app.post('/add3d', (req, res, next) => {
+    const { digit, dayago } = req.body;
     if(!digit || isNaN(digit.trim())){
         return res.status(400).json({error: "digit must be number."});
     }
@@ -36,11 +26,16 @@ app.get('/add3d', async (req, res) => {
         date.setDate(date.getDate() - dayago);
     }
 
-    const snapshot = await admin.database().ref('/3ds').push({digit, date: date.toString()});
-    res.json({ message: 'Successfully added.', key: snapshot.key });
+    admin.database().ref('/3ds').push({digit, date: date.toString()})
+        .then(snapshot => {
+            res.json({ message: 'Successfully added.', key: snapshot.key });
+        })
+        .catch(err => {
+            res.status(500).json({ error: err });
+        })
 })
 
-app.get('/get3ds', async (req, res) => {
+app.get('/get3ds', async (req, res, next) => {
     // Get a database reference to our posts
     var db = admin.database();
     var ref = db.ref("3ds").orderByChild("date").limitToLast(10);
