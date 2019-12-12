@@ -9,7 +9,7 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
-app.post('/add3d', (req, res, next) => {
+app.post('/add3d', (req, res) => {
     const { digit, dayago } = req.body;
     if(!digit || isNaN(digit.trim())){
         return res.status(400).json({error: "digit must be number."});
@@ -35,13 +35,13 @@ app.post('/add3d', (req, res, next) => {
         })
 })
 
-app.get('/get3ds', async (req, res, next) => {
-    // Get a database reference to our posts
+app.get('/get3ds', (req, res) => {
+    // Get a database reference
     var db = admin.database();
     var ref = db.ref("3ds").orderByChild("date").limitToLast(10);
 
-    // Attach an asynchronous callback to read the data at our posts reference
-    ref.on("value", function(snapshot) {
+    // Attach an asynchronous callback to read the data
+    ref.once("value", function(snapshot) {
         const ret_val = []
         const values = snapshot.val()
         for (let [key, value] of Object.entries(values)){
