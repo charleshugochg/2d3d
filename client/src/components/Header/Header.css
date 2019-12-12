@@ -1,0 +1,64 @@
+.header {
+    display: flex;
+    width: 100%;
+    max-height: 70px;
+}
+
+.box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box:first-child > a {
+    margin-right: auto;
+}
+
+.box:last-child > a {
+    margin-left: auto;
+}
+
+.brand {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 42px;
+    letter-spacing: 0.175em;
+    
+    color: #BF2525;
+}
+
+.btn {
+    max-width: 128px;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    background: #BF2525;
+    border-radius: 5px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: #FFFFFF;
+}
+
+.btn-menu {
+    padding: 4px 18px;
+    text-align: center;
+    text-decoration: none;
+    background: #BF2525;
+    border-radius: 0px 10px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    
+    color: #FFFFFF;
+}
+
+.invisible {
+    visibility: hidden;
+}

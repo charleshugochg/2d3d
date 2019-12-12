@@ -1,0 +1,57 @@
+form {
+    padding: 100px 10px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+label {
+    padding: 6px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: #BF2525;
+}
+
+input {
+    background: #FFFFFF;
+    border: 2px solid #BF2525;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.submit {
+    max-width: 128px;
+    width: 100%;
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    background: #BF2525;
+    border: none;
+    border-radius: 5px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+    cursor: pointer;
+
+    color: #FFFFFF;
+}
+
+.error {
+    text-align: center;
+    color:maroon;
+}
+
+.message {
+    text-align: center;
+    color: yellowgreen;
+}

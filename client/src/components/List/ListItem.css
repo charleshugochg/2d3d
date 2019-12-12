@@ -1,0 +1,60 @@
+.ListItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.date {
+    margin-left: 10px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+    
+    color: rgba(191, 37, 37, 0.6);
+}
+
+.digit {
+    margin: 10px 50px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+    
+    color: #BF2525;    
+}
+
+.size36 {
+    font-size: 36px;
+}
+
+.dialog {
+    max-width: 404px;
+    max-height: 164px;
+    padding: 14px 132px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #BF2525;
+    box-sizing: border-box;
+    background: #FFE5E5;
+}
+
+.btn-delete {
+    max-width: 128px;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    background: #BF2525;
+    border: none;
+    border-radius: 5px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+    cursor: pointer;
+
+    color: #FFFFFF;
+}
