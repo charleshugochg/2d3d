@@ -35,6 +35,22 @@ app.post('/add3d', (req, res) => {
         })
 })
 
+app.post('/delete3d', (req, res) => {
+    const { id } = req.body;
+    if(id && id.trim().length <= 0){
+        return res.status(400).json({error: "id must not be empty"})
+    }
+
+    admin.database().ref(`/3ds/${id}`).remove()
+        .then(() => {
+            res.json({message: 'Successfully deleted.'})
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({error: err.code});
+        })
+})
+
 app.get('/get3ds', (req, res) => {
     // Get a database reference
     var db = admin.database();
