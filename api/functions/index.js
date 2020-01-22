@@ -54,7 +54,7 @@ app.post('/delete3d', (req, res) => {
 app.get('/get3ds', (req, res) => {
     // Get a database reference
     var db = admin.database();
-    var ref = db.ref("3ds").orderByChild("date").limitToLast(10);
+    var ref = db.ref("3ds").limitToLast(10);
 
     // Attach an asynchronous callback to read the data
     ref.once("value", function(snapshot) {
